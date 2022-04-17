@@ -16,4 +16,10 @@
     <Folder Include="Properties\DataSources\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Music\order.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

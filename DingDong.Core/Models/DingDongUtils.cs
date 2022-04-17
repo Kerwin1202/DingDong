@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using RestSharp;
+using System.Text;
 using System.Web;
 
 namespace DingDong.Monitor.Models
@@ -70,6 +71,24 @@ namespace DingDong.Monitor.Models
 
         public static long NowTimeStamp => new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="message"></param>
+        public static void Push(string url, string message)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return;
+            }
+            var groupName = HttpUtility.UrlEncode("叮咚助手");
+            var msg = HttpUtility.UrlEncode(message);
+            var client = new RestClient($"{url.TrimEnd('/')}/{groupName}/{msg}?group={groupName}");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+            Console.WriteLine(response.Content);
+        }
     }
 }

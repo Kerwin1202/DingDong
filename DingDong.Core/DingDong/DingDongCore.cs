@@ -90,7 +90,7 @@ namespace DingDong.Monitor.DingDong
             bodys.Add("showData", "true");
             var result = RequestPost(url, GetCommonParams(bodys));
             var obj = JObject.Parse(result);
-            if (obj["success"].ToString() != "true")
+            if (obj["success"].ToString().ToLower() != "true")
             {
                 _log?.Invoke($"检查订单失败. {obj["msg"]}");
                 throw new DingDongException(obj["msg"].ToString());
@@ -142,7 +142,7 @@ namespace DingDong.Monitor.DingDong
             var result = RequestPost(url, GetCommonParams(bodys));
             // {"success":true,"code":0,"msg":"success","data":{"pay_url":"{\"timeStamp\":\"1650182341\",\"package\":\"prepay_id=wx17155901110395404e2ec64b5eccda0000\",\"appId\":\"wx1e113254eda17715\",\"sign\":\"082F7C89FE3FBFB545D9E82EB3712FBF\",\"signType\":\"MD5\",\"nonceStr\":\"70MAHai08O9KqLbll7RVMTAovjgGsj03\"}","pay_online":true,"order_number":"2204171874886872238","cart_count":28,"station_id":"5c8879d1716de1f6468b456d","event_tracking":{"post_product_algo":"{}"}},"tradeTag":"success","server_time":1650182341,"is_trade":1}
             var obj = JObject.Parse(result);
-            if (obj["success"].ToString() != "true")
+            if (obj["success"].ToString().ToLower() != "true")
             {
                 _log?.Invoke($"创建订单失败. {obj["msg"]}");
                 throw new DingDongException("");

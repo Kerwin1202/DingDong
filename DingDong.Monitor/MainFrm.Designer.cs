@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.nudContinue = new System.Windows.Forms.NumericUpDown();
             this.cbContinue = new System.Windows.Forms.CheckBox();
@@ -57,6 +59,7 @@
             this.dvg_TotalPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgv_Status = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnClearLog = new System.Windows.Forms.Button();
             this.cbTrackLog = new System.Windows.Forms.CheckBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.btnSaveAllConfig = new System.Windows.Forms.Button();
@@ -64,6 +67,7 @@
             this.txtPushUrl = new System.Windows.Forms.TextBox();
             this.btnTestPush = new System.Windows.Forms.Button();
             this.cbPlayMusic = new System.Windows.Forms.CheckBox();
+            this.niDingDong = new System.Windows.Forms.NotifyIcon(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudContinue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudInterval)).BeginInit();
@@ -96,6 +100,7 @@
             // 
             // nudContinue
             // 
+            this.nudContinue.Enabled = false;
             this.nudContinue.Location = new System.Drawing.Point(121, 387);
             this.nudContinue.Name = "nudContinue";
             this.nudContinue.Size = new System.Drawing.Size(89, 23);
@@ -110,6 +115,7 @@
             this.cbContinue.TabIndex = 10;
             this.cbContinue.Text = "监控持续(分钟)";
             this.cbContinue.UseVisualStyleBackColor = true;
+            this.cbContinue.CheckedChanged += new System.EventHandler(this.cbContinue_CheckedChanged);
             // 
             // cbCartMonitor
             // 
@@ -130,6 +136,7 @@
             this.cbCategoryMonitor.TabIndex = 8;
             this.cbCategoryMonitor.Text = "分类菜系监控";
             this.cbCategoryMonitor.UseVisualStyleBackColor = true;
+            this.cbCategoryMonitor.CheckedChanged += new System.EventHandler(this.cbCategoryMonitor_CheckedChanged);
             // 
             // btnStartMonitor
             // 
@@ -139,9 +146,11 @@
             this.btnStartMonitor.TabIndex = 7;
             this.btnStartMonitor.Text = "开始监控";
             this.btnStartMonitor.UseVisualStyleBackColor = true;
+            this.btnStartMonitor.Click += new System.EventHandler(this.btnStartMonitor_Click);
             // 
             // dtpBeginTime
             // 
+            this.dtpBeginTime.Enabled = false;
             this.dtpBeginTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpBeginTime.Location = new System.Drawing.Point(121, 343);
             this.dtpBeginTime.Name = "dtpBeginTime";
@@ -157,9 +166,11 @@
             this.cbTimeStart.TabIndex = 5;
             this.cbTimeStart.Text = "定时开始：";
             this.cbTimeStart.UseVisualStyleBackColor = true;
+            this.cbTimeStart.CheckedChanged += new System.EventHandler(this.cbTimeStart_CheckedChanged);
             // 
             // txtExclude
             // 
+            this.txtExclude.Enabled = false;
             this.txtExclude.Location = new System.Drawing.Point(121, 238);
             this.txtExclude.Multiline = true;
             this.txtExclude.Name = "txtExclude";
@@ -215,6 +226,7 @@
             this.dgv_Category_Check,
             this.dgv_Category_Name,
             this.dgv_Category_Status});
+            this.dgvCategory.Enabled = false;
             this.dgvCategory.Location = new System.Drawing.Point(8, 32);
             this.dgvCategory.Name = "dgvCategory";
             this.dgvCategory.RowTemplate.Height = 25;
@@ -227,7 +239,7 @@
             this.dgv_Category_Check.HeaderText = "#";
             this.dgv_Category_Check.Name = "dgv_Category_Check";
             this.dgv_Category_Check.ReadOnly = true;
-            this.dgv_Category_Check.Width = 50;
+            this.dgv_Category_Check.Width = 120;
             // 
             // dgv_Category_Name
             // 
@@ -368,6 +380,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnClearLog);
             this.groupBox3.Controls.Add(this.cbTrackLog);
             this.groupBox3.Controls.Add(this.richTextBox1);
             this.groupBox3.Location = new System.Drawing.Point(12, 464);
@@ -377,12 +390,22 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "日志";
             // 
+            // btnClearLog
+            // 
+            this.btnClearLog.Location = new System.Drawing.Point(830, 231);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(75, 23);
+            this.btnClearLog.TabIndex = 7;
+            this.btnClearLog.Text = "清空日志";
+            this.btnClearLog.UseVisualStyleBackColor = false;
+            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
+            // 
             // cbTrackLog
             // 
             this.cbTrackLog.AutoSize = true;
             this.cbTrackLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
             this.cbTrackLog.ForeColor = System.Drawing.Color.White;
-            this.cbTrackLog.Location = new System.Drawing.Point(931, 277);
+            this.cbTrackLog.Location = new System.Drawing.Point(920, 231);
             this.cbTrackLog.Name = "cbTrackLog";
             this.cbTrackLog.Size = new System.Drawing.Size(85, 21);
             this.cbTrackLog.TabIndex = 6;
@@ -397,6 +420,7 @@
             this.richTextBox1.ForeColor = System.Drawing.Color.White;
             this.richTextBox1.Location = new System.Drawing.Point(3, 19);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(1019, 245);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
@@ -415,7 +439,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(476, 386);
+            this.label3.Location = new System.Drawing.Point(476, 376);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(75, 17);
             this.label3.TabIndex = 4;
@@ -423,9 +447,10 @@
             // 
             // txtPushUrl
             // 
-            this.txtPushUrl.Location = new System.Drawing.Point(568, 380);
+            this.txtPushUrl.Location = new System.Drawing.Point(557, 373);
+            this.txtPushUrl.Multiline = true;
             this.txtPushUrl.Name = "txtPushUrl";
-            this.txtPushUrl.Size = new System.Drawing.Size(290, 23);
+            this.txtPushUrl.Size = new System.Drawing.Size(308, 49);
             this.txtPushUrl.TabIndex = 5;
             // 
             // btnTestPush
@@ -434,8 +459,9 @@
             this.btnTestPush.Name = "btnTestPush";
             this.btnTestPush.Size = new System.Drawing.Size(127, 37);
             this.btnTestPush.TabIndex = 6;
-            this.btnTestPush.Text = "测试推送";
+            this.btnTestPush.Text = "测试提醒";
             this.btnTestPush.UseVisualStyleBackColor = true;
+            this.btnTestPush.Click += new System.EventHandler(this.btnTestPush_Click);
             // 
             // cbPlayMusic
             // 
@@ -446,6 +472,12 @@
             this.cbPlayMusic.TabIndex = 7;
             this.cbPlayMusic.Text = "播放音乐";
             this.cbPlayMusic.UseVisualStyleBackColor = true;
+            // 
+            // niDingDong
+            // 
+            this.niDingDong.Icon = ((System.Drawing.Icon)(resources.GetObject("niDingDong.Icon")));
+            this.niDingDong.Text = "DingDong";
+            this.niDingDong.Visible = true;
             // 
             // MainFrm
             // 
@@ -485,9 +517,6 @@
         private DataGridView dgvCategory;
         private GroupBox groupBox2;
         private DataGridView dgvCart;
-        private DataGridViewTextBoxColumn dgv_Category_Check;
-        private DataGridViewTextBoxColumn dgv_Category_Name;
-        private DataGridViewCheckBoxColumn dgv_Category_Status;
         private GroupBox groupBox3;
         private Button btnRefreshCart;
         private Label label1;
@@ -517,5 +546,10 @@
         private CheckBox cbTimeStart;
         private NumericUpDown nudContinue;
         private CheckBox cbContinue;
+        private Button btnClearLog;
+        private DataGridViewTextBoxColumn dgv_Category_Check;
+        private DataGridViewTextBoxColumn dgv_Category_Name;
+        private DataGridViewCheckBoxColumn dgv_Category_Status;
+        private NotifyIcon niDingDong;
     }
 }
