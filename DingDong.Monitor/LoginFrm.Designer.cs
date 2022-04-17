@@ -70,7 +70,7 @@
             this.Controls.Add(this.label1);
             this.Name = "LoginFrm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LoginFrm";
+            this.Text = "登录 - 叮咚助手 ";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -5,9 +5,14 @@ VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DingDong.Monitor", "DingDong.Monitor\DingDong.Monitor.csproj", "{160D9BAA-6D5B-48B0-BC5E-B7EFC53C6B8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DingDong.MonitorTests", "DingDong.MonitorTests\DingDong.MonitorTests.csproj", "{AA5FBD2F-FB63-43C0-8C1C-AE2453571910}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DingDong.MonitorTests", "DingDong.MonitorTests\DingDong.MonitorTests.csproj", "{AA5FBD2F-FB63-43C0-8C1C-AE2453571910}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DingDong.Core", "DingDong.Core\DingDong.Core.csproj", "{F958EEDC-6C20-4C56-AF6C-BF3B262B56D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DingDong.Core", "DingDong.Core\DingDong.Core.csproj", "{F958EEDC-6C20-4C56-AF6C-BF3B262B56D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{9B3FBD75-07B2-438A-8392-899F52B900F7}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

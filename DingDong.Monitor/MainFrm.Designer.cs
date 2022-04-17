@@ -494,7 +494,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "MainFrm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainFrm";
+            this.Text = "叮咚助手";
             this.Shown += new System.EventHandler(this.MainFrm_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
