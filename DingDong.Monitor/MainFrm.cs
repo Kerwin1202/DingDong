@@ -288,6 +288,7 @@ namespace DingDong.Monitor
             {
                 WriteLog(ex.Message);
             }
+            return false;
         }
 
         private static void PlayMusic()
