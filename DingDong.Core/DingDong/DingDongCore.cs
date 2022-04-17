@@ -170,6 +170,10 @@ namespace DingDong.Monitor.DingDong
             var times = new List<(bool closed, long? start_timestamp, long? end_timestamp, string? arrival_time_msg)>();
             foreach (var item in obj["data"][0]["time"])
             {
+                if (item["times"][0]["disableType"].ToString() != "0")
+                {
+                    continue;
+                }
                 times.Add((false
                     , Convert.ToInt64(item["times"][0]["start_timestamp"].ToString())
                     , Convert.ToInt64(item["times"][0]["end_timestamp"].ToString())

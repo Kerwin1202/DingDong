@@ -84,9 +84,16 @@ namespace DingDong.Monitor
                 {
                     return;
                 }
-                DdConfig.Categories = DdCore.GetAllCategories()
-                              .OrderByDescending(d => d.Monitor)
-                              .ToList();
+                try
+                {
+                    DdConfig.Categories = DdCore.GetAllCategories()
+                                         .OrderByDescending(d => d.Monitor)
+                                         .ToList();
+                }
+                catch (Exception ex)
+                {
+                    WriteLog(ex.Message);
+                }
             }
             dgvCart.Rows.Clear();
             dgvCategory.DataSource = DdConfig.Categories;
@@ -99,9 +106,17 @@ namespace DingDong.Monitor
             {
                 return null;
             }
-            var cart = DdCore.GetCartInfo();
-            RefreshCartUi(cart);
-            return cart;
+            try
+            {
+                var cart = DdCore.GetCartInfo();
+                RefreshCartUi(cart);
+                return cart;
+            }
+            catch (Exception ex)
+            {
+                WriteLog(ex.Message);
+            }
+            return null;
         }
 
         private void RefreshCartUi(CartData? cart)
@@ -187,9 +202,16 @@ namespace DingDong.Monitor
                     if (thisProduct != null)
                     {
                         var isCheck = (bool)this.dgvCart[e.ColumnIndex, e.RowIndex].Value == true;
-                        var cart = DdCore.UpdateCheckCart(thisProduct.id
-                             , thisProduct.cart_id
-                             , isCheck);
+                        try
+                        {
+                            var cart = DdCore.UpdateCheckCart(thisProduct.id
+                                                 , thisProduct.cart_id
+                                                 , isCheck);
+                        }
+                        catch (Exception ex)
+                        {
+                            WriteLog(ex.Message);
+                        }
                         WriteLog($"{(isCheck ? "加入" : "取消")} 【{thisProduct.product_name}】 到购物车成功.");
                         RefreshCart();
                     }
@@ -213,52 +235,59 @@ namespace DingDong.Monitor
 
         private bool MakeOrder(CartData? cart)
         {
-            if (cart == null || cart.new_order_product_list.FirstOrDefault() == null)
+            try
             {
-                WriteLog("洗车单为空，无法下单.");
-                return false;
-            }
-            var reserveTimes = DdCore.GetMultiReserveTime(cart.new_order_product_list.FirstOrDefault().products);
-            if (reserveTimes.Count <= 0)
-            {
-                WriteLog("暂无运力...");
-                return false;
-            }
-            if (reserveTimes.FirstOrDefault(d => d.closed).closed)
-            {
-                WriteLog("今天关门了...");
-                return false;
-            }
-            WriteLog($"有运力：{reserveTimes.FirstOrDefault().arrival_time_msg} ...");
-
-            var orderCart = JsonConvert.DeserializeObject<New_Order_Product_List2>(JsonConvert.SerializeObject(cart.new_order_product_list[0]));
-            orderCart.reserved_time = new reserved_time()
-            {
-                reserved_time_end = reserveTimes.FirstOrDefault().end_timestamp.Value,
-                reserved_time_start = reserveTimes.FirstOrDefault().start_timestamp.Value,
-            };
-            foreach (var item in orderCart.products)
-            {
-                item.total_money = item.total_origin_money = item.price;
-            }
-            DdCore.CheckOrder(orderCart);
-
-            DdCore.CreateNewOrder(cart, (reserveTimes.FirstOrDefault().start_timestamp.Value, reserveTimes.FirstOrDefault().end_timestamp.Value));
-            WriteLog("下单成功，快去付款。。");
-            this.NotifyIcon_ShowBalloonTip(30_000, "叮咚助手", "下单成功，快去付款", ToolTipIcon.Info);
-            if (DdConfig.SoftConfig.PlayMusic)
-            {
-                PlayMusic();
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                foreach (var pushUrl in DdConfig.SoftConfig.PushUrls ?? new List<string>())
+                if (cart == null || cart.new_order_product_list.FirstOrDefault() == null)
                 {
-                    DingDongUtils.Push(pushUrl, "下单成功，快去付款");
+                    WriteLog("洗车单为空，无法下单.");
+                    return false;
                 }
-                Thread.Sleep(1000);
+                var reserveTimes = DdCore.GetMultiReserveTime(cart.new_order_product_list.FirstOrDefault().products);
+                if (reserveTimes.Count <= 0)
+                {
+                    WriteLog("暂无运力...");
+                    return false;
+                }
+                if (reserveTimes.FirstOrDefault(d => d.closed).closed)
+                {
+                    WriteLog("今天关门了...");
+                    return false;
+                }
+                WriteLog($"有运力：{reserveTimes.FirstOrDefault().arrival_time_msg} ...");
+
+                var orderCart = JsonConvert.DeserializeObject<New_Order_Product_List2>(JsonConvert.SerializeObject(cart.new_order_product_list[0]));
+                orderCart.reserved_time = new reserved_time()
+                {
+                    reserved_time_end = reserveTimes.FirstOrDefault().end_timestamp.Value,
+                    reserved_time_start = reserveTimes.FirstOrDefault().start_timestamp.Value,
+                };
+                foreach (var item in orderCart.products)
+                {
+                    item.total_money = item.total_origin_money = item.price;
+                }
+                DdCore.CheckOrder(orderCart);
+
+                DdCore.CreateNewOrder(cart, (reserveTimes.FirstOrDefault().start_timestamp.Value, reserveTimes.FirstOrDefault().end_timestamp.Value));
+                WriteLog("下单成功，快去付款。。");
+                this.NotifyIcon_ShowBalloonTip(30_000, "叮咚助手", "下单成功，快去付款", ToolTipIcon.Info);
+                if (DdConfig.SoftConfig.PlayMusic)
+                {
+                    PlayMusic();
+                }
+                for (int i = 0; i < 3; i++)
+                {
+                    foreach (var pushUrl in DdConfig.SoftConfig.PushUrls ?? new List<string>())
+                    {
+                        DingDongUtils.Push(pushUrl, "下单成功，快去付款");
+                    }
+                    Thread.Sleep(1000);
+                }
+                return true;
             }
-            return true;
+            catch (Exception ex)
+            {
+                WriteLog(ex.Message);
+            }
         }
 
         private static void PlayMusic()
