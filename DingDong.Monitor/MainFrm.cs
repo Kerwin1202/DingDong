@@ -38,7 +38,10 @@ namespace DingDong.Monitor
             if (DdConfig != null && DdConfig.DdConfig != null)
             {
                 DdCore = new DingDongCore(DdConfig.DdConfig, WriteLog);
-                DdCore._track = DdConfig.SoftConfig.TrackLog;
+                if (DdConfig.SoftConfig != null)
+                {
+                    DdCore._track = DdConfig.SoftConfig.TrackLog;
+                }
                 RefreshCategories();
             }
         }
