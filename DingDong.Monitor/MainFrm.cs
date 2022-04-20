@@ -239,7 +239,7 @@ namespace DingDong.Monitor
             {
                 if (cart == null || cart.new_order_product_list.FirstOrDefault() == null)
                 {
-                    WriteLog("洗车单为空，无法下单.");
+                    WriteLog("待下单列表为空，无法下单.");
                     return false;
                 }
                 var reserveTimes = DdCore.GetMultiReserveTime(cart.new_order_product_list.FirstOrDefault().products);
@@ -444,9 +444,11 @@ namespace DingDong.Monitor
                             if (DdConfig.SoftConfig.MonitorCart)
                             {
                                 var cart = RefreshCart();
+                                Thread.Sleep(1200);
                                 if (MakeOrder(cart))
                                 {
                                     WriteLog($"已经提交订单，自动终止...");
+                                    WriteLog($"总共耗时：{(DateTime.Now - MonitorBeginTime.Value).TotalSeconds} 秒...");
                                     IsMonitoring = false;
                                     Invoke(new Action(() =>
                                     {

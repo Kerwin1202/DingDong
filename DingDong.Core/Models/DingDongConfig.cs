@@ -18,6 +18,8 @@
 
         public string Device_Token { get; set; }
 
+        public string Api_Version { get; set; }
 
+        public string App_Version { get; set; }
     }
 }

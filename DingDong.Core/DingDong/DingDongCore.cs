@@ -15,8 +15,6 @@ namespace DingDong.Monitor.DingDong
     public class DingDongCore
     {
         private const string AB_CONFIG = "%7B%22key_onion%22%3A%22D%22%2C%22key_cart_discount_price%22%3A%22C%22%7D";
-        private const string API_VERSION = "9.50.0";
-        private const string APP_VERSION = "2.83.0";
 
         private readonly DingDongConfig _config;
 
@@ -336,8 +334,8 @@ namespace DingDong.Monitor.DingDong
             client.UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 15_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.20(0x18001429) NetType/WIFI Language/zh_CN";
             request.AddHeader("referer", "https://servicewechat.com/wx1e113254eda17715/422/page-frame.html");
             request.AddHeader("cookie", $"DDXQSESSID={_config.S_Id}");
-            request.AddHeader("ddmc-api-version", API_VERSION);
-            request.AddHeader("ddmc-build-version", APP_VERSION);
+            request.AddHeader("ddmc-api-version", _config.Api_Version);
+            request.AddHeader("ddmc-build-version", _config.App_Version);
             request.AddHeader("ddmc-app-client-id", "4");
             request.AddHeader("ddmc-channel", "applet");
             request.AddHeader("ddmc-os-version", "[object Undefined]");
@@ -382,8 +380,8 @@ namespace DingDong.Monitor.DingDong
                         .Append("latitude", _config.Latitude)
                         .Append("station_id", _config.Station_Id)
                         .Append("city_number", _config.City_Number)
-                        .Append("api_version", API_VERSION)
-                        .Append("app_version", APP_VERSION)
+                        .Append("api_version", _config.Api_Version)
+                        .Append("app_version", _config.App_Version)
                         .Append("applet_source")
                         .Append("channel", "applet")
                         .Append("app_client_id", "4")
